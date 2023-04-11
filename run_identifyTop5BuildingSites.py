@@ -6,14 +6,17 @@
 import pandas as pd
 import importlib
 import setup
-importlib.reload(setup)   # For local debugging
+importlib.reload(setup)  # For local debugging
 
 # Read
-df = setup.read_data()  # Could be persistent but data is big: rawD = readData()
+# rawD = setup.read_data()  # keep persistent copy for reference during development
+df = setup.read_data()
+df = setup.convert_raw_date_time(df)
 
-# Filter to 'Building Site complaints
+# Filter to 'Building Site' complaints
 df = df[df['Complaint Type'] == 'Building Site']
 # df = df.sort_values('Received Date')
+
 
 # add regexp with 2022
 # tmp = tmp[tmp['Received Date'][7:] == '2022']
