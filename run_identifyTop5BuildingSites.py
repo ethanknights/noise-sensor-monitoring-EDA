@@ -4,10 +4,12 @@
 
 # Imports
 import pandas as pd
-from setup import read_data
+import importlib
+import setup
+importlib.reload(setup)   # For local debugging
 
 # Read
-df = read_data()  # Could be persistent but data is big: rawD = readData()
+df = setup.read_data()  # Could be persistent but data is big: rawD = readData()
 
 # Filter to 'Building Site complaints
 df = df[df['Complaint Type'] == 'Building Site']
