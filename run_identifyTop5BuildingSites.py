@@ -1,4 +1,8 @@
-# Purpose: Identify building site address info for top 5(?) sites (i.e. highest N registered complaints)
+# Purpose: Identify building site address info for top 5(?) sites
+# Top 5 definition == highest N registered complaints
+# ---
+
+# Imports
 import pandas as pd
 from setup import read_data
 
