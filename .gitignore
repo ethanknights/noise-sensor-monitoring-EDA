@@ -1,0 +1,8 @@
+# source/derived data
+data
+derivatives
+
+# Environment
+venv/
+.idea/
+.DS_Store
