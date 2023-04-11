@@ -6,3 +6,6 @@ derivatives
 venv/
 .idea/
 .DS_Store
+
+# unit_test caches
+__pycache__/
