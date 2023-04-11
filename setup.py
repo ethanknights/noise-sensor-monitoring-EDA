@@ -4,7 +4,12 @@ from datetime import datetime
 
 
 def read_data():
-    # Return dataframe of all complaints (sorted byDate)
+    """
+    Return dataframe of all complaints.
+
+    :return: rawD: (Currently via loading hardcoded data path locally)
+    :rtype: pd.dataframe
+    """
 
     rawD = pd.read_csv('./data/raw_April2023_1997-2023.csv')
 
@@ -12,9 +17,15 @@ def read_data():
 
 
 def convert_raw_date_time(df):
-    # Return dataframe with datetime objects for the columns:
-    # - 'Received Date' (yyyy-mm-dd)
-    # - 'Received Time' (HH:MM or pd.NaT)
+    """
+    Return dataframe where datetime string columns are converted to datetime objects according to:
+    - 'Received Date' (yyyy-mm-dd)
+    - 'Received Time' (HH:MM or pd.NaT)
+
+    :param df: Dataframe including 'Received Date' and 'Received Time' columns.
+    :return: df: Return dataframe
+    :rtype: pd.dataframe
+    """
 
     if df['Received Date'].iloc[0][2] == '/':  # If df still in raw format (dd/mm/yyyy)
 
@@ -29,7 +40,14 @@ def convert_raw_date_time(df):
 
 # EXTRA FUNCTIONS
 def extra_print_unique_data(df):
-    # EXTRA TEMPORARY!
+    """
+    EXTRA TEMPORARY!    Print unique values from a dict
+
+    :param df: Dataframe including 'Received Date' and 'Received Time' columns.
+    :return: unique_values_dict: Dictionary with key per column, and all of the column's unique values
+    :rtype: dict
+    """
+
     # Print unique values to get dataset gist
     unique_values_dict = {}
     for col in df.columns:
@@ -41,4 +59,4 @@ def extra_print_unique_data(df):
     print(unique_values_dict['Complaint Sub Type'])
     print(unique_values_dict['AddressKey'][0:9])
 
-    return
+    return unique_values_dict
