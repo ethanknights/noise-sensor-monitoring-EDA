@@ -1,8 +1,9 @@
 # Purpose: Identify building site address info for top 5(?) sites (i.e. highest N registered complaints)
+import pandas as pd
+from setup import readData
 
-#
-df = rawD  # Inherited dataframe sorted byDate (from setup/setup.py)
-
+# Read
+df = readData()  # Could be persistent but data is big: rawD = readData()
 
 # Filter
 df = df[df['Complaint Type'] == 'Building Site']

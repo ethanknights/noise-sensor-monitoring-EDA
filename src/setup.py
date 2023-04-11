@@ -1,11 +1,13 @@
 import pandas as pd
-
+# Inherited
 def readData():
+    # Return dataframe of all complaints (sorted byDate)
+
     # Read
     rawD = pd.read_csv('./data/raw_April2023_1997-2023.csv')
     rawD = rawD.sort_values('Received Date')
 
-    # Print unique values to get dataset gist
+    # EXTRA TEMPORARY! Print unique values to get dataset gist
     unique_values_dict = {}
     for col in rawD.columns:
         unique_values_dict[col] = rawD[col].unique()
