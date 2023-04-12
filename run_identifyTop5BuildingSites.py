@@ -30,3 +30,11 @@ df = df.sort_values('Received DateTime')
 df = df[df['Complaint Type'].isin(['Building Site', 'Building site'])]
 print('Dropping non-building sites')
 setup.describe_data(df)
+
+
+# Subset for latest 2 months
+first_date = '2023-01-28'
+last_date = '2023-03-28'
+print(f'Getting subset of complaints within these dates (inclusive):\n{first_date} - {last_date}')
+df = setup.get_subset_via_dates(df, first_date, last_date)
+setup.describe_data(df)

@@ -93,6 +93,20 @@ def create_joined_datetime(df):
     return df
 
 
+def get_subset_via_dates(df, first_date, last_date):
+    """
+    Return subsetted dataframe based on firstDate and lastDate
+
+    :param df: Dataframe including 'Received DateTime' column.
+    :param first_date: String of first date to include in subset.
+    :param last_date: String of last date to include in subset.
+    :return: subset_df: Return dataframe d
+    :rtype: pd.dataframe
+    """
+    subset_df = df.loc[(df['Received DateTime'] >= first_date) & (df['Received DateTime'] <= last_date)]
+    return subset_df
+
+
 # EXTRA FUNCTIONS
 def extra_print_unique_data(df):
     """
