@@ -3,12 +3,16 @@
 # ---
 
 # Imports
+import os
 import pandas as pd
 import warnings
 import importlib
 import setup
-warnings.filterwarnings("ignore", message="iteritems is deprecated")
 importlib.reload(setup)  # For local debugging
+
+# Init environment
+os.makedirs('derivatives', exist_ok=True)
+warnings.filterwarnings("ignore", message="iteritems is deprecated")
 
 # Read
 # rawD = setup.read_data()  # keep persistent copy for reference during development
