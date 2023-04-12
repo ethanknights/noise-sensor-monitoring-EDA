@@ -10,6 +10,6 @@ python run_identifyTopBuildingSites.py
 
 ### Unit Tests
 
-```sh 
- python -m unittest discover -s unit_tests -p 'test_*.py'
+```sh
+python -m unittest discover -s unit_tests -p 'test_*.py'
 ```
