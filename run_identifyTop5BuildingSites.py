@@ -11,7 +11,8 @@ import setup
 importlib.reload(setup)  # For local debugging
 
 # Init environment
-os.makedirs('derivatives', exist_ok=True)
+out_dir = 'derivatives'
+os.makedirs(out_dir, exist_ok=True)
 warnings.filterwarnings("ignore", message="iteritems is deprecated")
 
 # Read
@@ -38,3 +39,15 @@ last_date = '2023-03-28'
 print(f'Getting subset of complaints within these dates (inclusive):\n{first_date} - {last_date}')
 df = setup.get_subset_via_dates(df, first_date, last_date)
 setup.describe_data(df)
+
+# ---
+# Piecemeal EDA
+# ---
+unique_values_dict = setup.extra_print_unique_data(df)
+
+unique_counts_dict_reference = setup.count_unique_codes(df, 'Noise Complaint Index', out_dir)  # Reference in Uniform
+# unique_counts_dict_address = setup.count_unique_codes(df, 'AddressKey', out_dir)  # Ignore: AddressKey - DWH GUID
+unique_counts_dict_ward = setup.count_unique_codes(df, 'WardCode', out_dir)
+unique_counts_dict_LSOA = setup.count_unique_codes(df, 'LSOACode', out_dir)
+unique_counts_dict_MSOA = setup.count_unique_codes(df, 'MSOACode', out_dir)
+unique_counts_dict_OutA = setup.count_unique_codes(df, 'OutputArea', out_dir)
