@@ -3,6 +3,16 @@ import sys
 from datetime import datetime
 
 
+def describe_data(df):
+    """
+    Print nRows (i.e. complaints in dataframe).
+
+    :param df: df: From read_data()
+    """
+    print(f"Current nRows in memory: {df.shape[0]}\n")
+    return
+
+
 def read_data():
     """
     Return dataframe of all complaints.
@@ -11,9 +21,11 @@ def read_data():
     :rtype: pd.dataframe
     """
 
-    rawD = pd.read_csv('./data/raw_April2023_1997-2023.csv')
+    df = pd.read_csv('./data/raw_April2023_1997-2023.csv')
+    print('Loaded data as: df')
+    describe_data(df)
 
-    return rawD
+    return df
 
 
 def convert_raw_date_time(df):
@@ -34,6 +46,49 @@ def convert_raw_date_time(df):
 
         df['Received Time'] = df['Received Time'].apply(
             lambda x: pd.NaT if x == 'XXXX' else datetime.strptime(x, '%H:%M').time())
+
+    return df
+
+
+def remove_missing_date_rows(df):
+    """
+    Return dataframe with NaT values dropped
+
+    :param df: Dataframe including 'Received Time' columns.
+    :return: df: Return dataframe
+    :rtype: pd.dataframe
+    """
+    na_rows = df[df['Received Time'].isna()]
+
+    print(f"Dropping {na_rows.shape[0]} rows with NaT in 'Received Time' column:")
+    print(na_rows)
+
+    df.drop(na_rows.index, inplace=True)
+
+    describe_data(df)
+
+    return df
+
+
+def create_joined_datetime(df):
+    """
+    Return dataframe with 'datetime' column appended after 'Date Received' which
+    concatenates 'Received Date' (yyyy-mm-dd) & 'Received Time' (HH:MM or pd.NaT)
+
+    :param df: Dataframe including 'Received Date' and 'Received Time' columns.
+    :return: df: Return dataframe
+    :rtype: pd.dataframe
+    """
+    df['Received DateTime'] = pd.to_datetime(df['Received Date'].astype(str) + ' ' + df['Received Time'].astype(str))
+
+    def change_column_order(df, col_name, index):
+        cols = df.columns.tolist()
+        cols.remove(col_name)
+        cols.insert(index, col_name)
+        return df[cols]
+    col_names = df.columns.tolist()
+    idx = col_names.index('Received Time')
+    df = change_column_order(df, 'Received DateTime', idx + 1)
 
     return df
 
