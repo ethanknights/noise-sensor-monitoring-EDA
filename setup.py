@@ -1,7 +1,6 @@
 import pandas as pd
-import sys
+import os, sys, json
 from datetime import datetime
-
 
 def describe_data(df):
     """
@@ -129,3 +128,51 @@ def extra_print_unique_data(df):
     print(unique_values_dict['AddressKey'][0:9])
 
     return unique_values_dict
+
+
+def count_unique_codes(df, column_name, out_dir):
+    """
+    Counts the number of unique values in a specified column of a pandas dataframe and writes as a .json to out_dir.
+
+    Args:
+        df: Pandas dataframe to count unique values from.
+        column_name: Name of the column to count unique values from.
+        out_dir: Name of directory for writing dict to .json.
+
+    Returns:
+        A dictionary containing the unique values in the specified column and their corresponding counts.
+        A string of the ouput_filename
+
+    Example Usage:
+        >>> unique_counts = count_unique_codes(df, 'WardCode')
+        >>> print(unique_counts)
+            {'Foo': 10, 'Bar': 18, 'Baz': 22, ...}
+    """
+
+    unique_counts_dict = {}
+
+    # Loop through the dataframe
+    for index, row in df.iterrows():
+        this_row_string = row[column_name]
+
+        if this_row_string in unique_counts_dict:
+            unique_counts_dict[this_row_string] += 1
+        else:
+            unique_counts_dict[this_row_string] = 1
+
+    # Sort & print dict
+    unique_counts_dict = dict(sorted(unique_counts_dict.items(), key=lambda x: x[1], reverse=True))
+    print(f"Counts of unique values (sorted):\n"
+          f"{column_name}:\n"
+          f"{unique_counts_dict}\n")
+
+    # Write dict to .json
+    out_filename = os.path.join(out_dir, column_name + '.json')
+
+    print(f"Writing unique_counts_dict as .json to:\n"
+          f"{out_filename}:\n")
+
+    with open(out_filename, 'w') as outfile:
+        json.dump(unique_counts_dict, outfile)
+
+    return unique_counts_dict, out_filename
