@@ -1,7 +1,7 @@
 import pandas as pd
 import datetime
 import unittest
-import setup
+import noise_functions
 
 
 class TestDataFrame(unittest.TestCase):
