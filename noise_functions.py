@@ -57,7 +57,9 @@ def remove_missing_date_rows(df):
     :return: df: Return dataframe
     :rtype: pd.dataframe
     """
-    na_rows = df[df['Received Time'].isna()]
+    na_rows =\
+        df[df['Received Time'].isna()] |\
+        df[df['Received Time'] == 'XXXX']
 
     print(f"Dropping {na_rows.shape[0]} rows with NaT in 'Received Time' column:")
     print(na_rows)
