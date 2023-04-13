@@ -20,7 +20,7 @@ def read_data():
     :rtype: pd.dataframe
     """
 
-    df = pd.read_csv('./data/raw_April2023_1997-2023.csv')
+    df = pd.read_csv(os.path.join('data/raw-all-noise-complaints_range-1997-12-Apr-2023' + '.csv'))
     print('Loaded data as: df')
     describe_data(df)
 
