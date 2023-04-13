@@ -30,15 +30,15 @@ df = df.sort_values('Received DateTime')
 
 # Filter to 'Building Site' complaints
 df = df[df['Complaint Type'].isin(['Building Site', 'Building site'])]
-print('Dropping non-building sites')
+print('Dropped non-building sites')
 noise_functions.describe_data(df)
 
 
 # Subset for latest 2 months
 first_date = '2023-01-28'
 last_date = '2023-03-28'
-print(f'Getting subset of complaints within these dates (inclusive):\n{first_date} - {last_date}')
 df = noise_functions.get_subset_via_dates(df, first_date, last_date)
+print(f'Got subset of complaints within these dates (inclusive):\n{first_date} - {last_date}')
 noise_functions.describe_data(df)
 
 # ---
