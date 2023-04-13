@@ -13,6 +13,7 @@ importlib.reload(noise_functions)  # For local debugging
 # Init environment
 out_dir = 'derivatives'
 os.makedirs(out_dir, exist_ok=True)
+# pd.set_option('display.max_columns', None); pd.reset_option('display.max_columns') # Options for local debugging
 warnings.filterwarnings("ignore", message="iteritems is deprecated")
 
 # Read
