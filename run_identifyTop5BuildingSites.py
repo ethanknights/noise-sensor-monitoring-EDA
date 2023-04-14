@@ -33,10 +33,9 @@ df = df[df['Complaint Type'].isin(['Building Site', 'Building site'])]
 print('Dropped non-building sites')
 noise_functions.describe_data(df)
 
-
 # Subset for latest 2 months
-first_date = '2023-01-28'
-last_date = '2023-03-28'
+first_date = '2023-02-12'
+last_date = '2023-04-12'
 df = noise_functions.get_subset_via_dates(df, first_date, last_date)
 print(f'Got subset of complaints within these dates (inclusive):\n{first_date} - {last_date}')
 noise_functions.describe_data(df)
@@ -46,9 +45,9 @@ noise_functions.describe_data(df)
 # ---
 unique_values_dict = noise_functions.extra_print_unique_data(df)
 
-unique_counts_dict_reference = noise_functions.count_unique_codes(df, 'Noise Complaint Index', out_dir)  # Reference in Uniform
+unique_counts_dict_reference = noise_functions.count_unique_codes(df, 'Noise Complaint Index', out_dir)[0]  # Reference in Uniform
 # unique_counts_dict_address = setup.count_unique_codes(df, 'AddressKey', out_dir)  # Ignore: AddressKey - DWH GUID
-unique_counts_dict_ward = noise_functions.count_unique_codes(df, 'WardCode', out_dir)
-unique_counts_dict_LSOA = noise_functions.count_unique_codes(df, 'LSOACode', out_dir)
-unique_counts_dict_MSOA = noise_functions.count_unique_codes(df, 'MSOACode', out_dir)
-unique_counts_dict_OutA = noise_functions.count_unique_codes(df, 'OutputArea', out_dir)
+unique_counts_dict_ward = noise_functions.count_unique_codes(df, 'WardCode', out_dir)[0]
+unique_counts_dict_LSOA = noise_functions.count_unique_codes(df, 'LSOACode', out_dir)[0]
+unique_counts_dict_MSOA = noise_functions.count_unique_codes(df, 'MSOACode', out_dir)[0]
+unique_counts_dict_OutA = noise_functions.count_unique_codes(df, 'OutputArea', out_dir)[0]
