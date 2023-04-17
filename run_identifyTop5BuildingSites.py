@@ -71,14 +71,14 @@ print(keys_list)
 if not os.path.isfile('./data/LSOA_Dec_2021_EK-westminster.geojson'):
     noise_plot_functions.init_write_geojson_westminster_lsoa_subset()  # Run once!
 
-fig = noise_plot_functions.plot_heatmap_lower_super_output_areas(
+fig = noise_plot_functions.plot_heatmap_lsoas(
     list(unique_counts_dict_LSOA.items()))
 fig.savefig(os.path.join(out_dir, 'geopd_heatmap_all' + '.png'))
 
-fig = noise_plot_functions.plot_highlighted_lower_super_output_areas(
+fig = noise_plot_functions.plot_highlighted_lsoas(
     keys_list)
 fig.savefig(os.path.join(out_dir, 'geopd_highlighted_top5' + '.png'))
 
-fig = noise_plot_functions.plot_heatmap_lower_super_output_areas(
+fig = noise_plot_functions.plot_heatmap_lsoas(
     list(unique_counts_dict_LSOA.items())[:5])
 fig.savefig(os.path.join(out_dir, 'geopd_heatmap_top5' + '.png'))

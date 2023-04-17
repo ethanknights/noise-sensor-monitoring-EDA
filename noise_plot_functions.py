@@ -26,7 +26,7 @@ def init_write_geojson_westminster_lsoa_subset():
     return
 
 
-def plot_highlighted_lower_super_output_areas(keys_list):
+def plot_highlighted_lsoas(keys_list):
 
     gdf = gpd.read_file(base_geojson_file)
 
@@ -44,7 +44,7 @@ def plot_highlighted_lower_super_output_areas(keys_list):
     return fig
 
 
-def plot_heatmap_lower_super_output_areas(list_of_tuples_lsoa_value):
+def plot_heatmap_lsoas(list_of_tuples_lsoa_value):
 
     gdf = gpd.read_file(base_geojson_file)
 
