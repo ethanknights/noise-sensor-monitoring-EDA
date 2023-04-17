@@ -8,7 +8,9 @@ import pandas as pd
 import warnings
 import importlib
 import noise_functions
+import noise_plot_functions
 importlib.reload(noise_functions)  # For local debugging
+importlib.reload(noise_plot_functions)  # For local debugging
 
 # Init environment
 out_dir = 'derivatives'
@@ -51,3 +53,32 @@ unique_counts_dict_ward = noise_functions.count_unique_codes(df, 'WardCode', out
 unique_counts_dict_LSOA = noise_functions.count_unique_codes(df, 'LSOACode', out_dir)[0]
 unique_counts_dict_MSOA = noise_functions.count_unique_codes(df, 'MSOACode', out_dir)[0]
 unique_counts_dict_OutA = noise_functions.count_unique_codes(df, 'OutputArea', out_dir)[0]
+
+
+# visualise
+print('All LSOAs\n')
+print(unique_counts_dict_LSOA)
+
+print('\nTop 5 LSOAs\n')
+keys_list = []
+for key in list(unique_counts_dict_LSOA.keys())[:5]:
+    keys_list.append(key)
+print(keys_list)
+
+
+###
+# Try to visualise boundaries
+if not os.path.isfile('./data/LSOA_Dec_2021_EK-westminster.geojson'):
+    noise_plot_functions.init_write_geojson_westminster_lsoa_subset()  # Run once!
+
+fig = noise_plot_functions.plot_heatmap_lsoas(
+    list(unique_counts_dict_LSOA.items()))
+fig.savefig(os.path.join(out_dir, 'geopd_heatmap_all' + '.png'))
+
+fig = noise_plot_functions.plot_highlighted_lsoas(
+    keys_list)
+fig.savefig(os.path.join(out_dir, 'geopd_highlighted_top5' + '.png'))
+
+fig = noise_plot_functions.plot_heatmap_lsoas(
+    list(unique_counts_dict_LSOA.items())[:5])
+fig.savefig(os.path.join(out_dir, 'geopd_heatmap_top5' + '.png'))
