@@ -1,7 +1,11 @@
 import geopandas as gpd
 from matplotlib import pyplot as plt
 import matplotlib as mpl
+import datetime
 
+#-------------------
+# GEOPLOTS
+#-------------------
 ## Environment
 base_geojson_file = './data/LSOA_Dec_2021_EK-westminster.geojson' # see init_write_geojson_westminster_lsoa_subset()
 
@@ -65,5 +69,27 @@ def plot_heatmap_lsoas(list_of_tuples_lsoa_value):
     fig, ax = plt.subplots(figsize=(10, 10))
     gdf.plot(ax=ax, column='plot_value',
              cmap='Reds', alpha=0.5, edgecolor='black', linewidth=0.8, legend=True, cax=plt.axes([0.9, 0.1, 0.02, 0.8]))
+
+    return fig
+
+
+#-------------------
+# nComplaints Plots
+#-------------------
+
+def plot_nComplaint_barh(categories, values, descript_str, out_dir):
+
+    plt.figure(figsize=(10, 8))  # plt.style.use('bmh')
+    fig = plt.gcf()
+    fig.patch.set_facecolor('white')
+    plt.barh(categories, values, linewidth=2, edgecolor='black', facecolor='none')
+    plt.title(descript_str, fontsize=18)
+    plt.xlabel("Frequency", fontsize=14)
+    plt.ylabel(descript_str, fontsize=14)
+    plt.tick_params(axis='both', labelsize=12, length=0)
+    plt.grid(False)
+    # Add values to the right of each bar
+    for i, v in enumerate(values):
+        plt.text(v + 10, i, str(v), color='black', fontweight='bold')
 
     return fig
