@@ -77,7 +77,7 @@ def plot_heatmap_lsoas(list_of_tuples_lsoa_value):
 # nComplaints Plots
 #-------------------
 
-def plot_nComplaint_barh(categories, values, descript_str, out_dir):
+def plot_nComplaint_barh(categories, values, descript_str):
 
     plt.figure(figsize=(10, 8))  # plt.style.use('bmh')
     fig = plt.gcf()
