@@ -118,23 +118,18 @@ do_ACF_PACF_plots(df)
 df.set_index('Received Date', inplace=True) # required datetime index
 df.index.freq = 'D'  # Set the frequency to 'D' for daily data
 
-# Replace p, d, and q with the identified values of autoregressive lags, differencing, and moving average lags
+# autoregressive lags, differencing, and moving average lags
 p = 1
 d = 0
 q = 1
-
-# Replace seasonal_p, seasonal_d, and seasonal_q with the identified values of seasonal autoregressive lags, seasonal differencing, and seasonal moving average lags (which are all zeros in this case)
+# seasonal autoregressive lags, seasonal differencing, and seasonal moving average lags
 seasonal_p = 1
 seasonal_d = 0
 seasonal_q = 0
-
-# Set the seasonal period to 6 (since you identified the seasonal pattern with a period of 6)
 seasonal_period = 6
 
 # Create the ARIMA model with seasonal components
 model = ARIMA(df['Frequency'], order=(p, d, q), seasonal_order=(seasonal_p, seasonal_d, seasonal_q, seasonal_period))
-
-
 result = model.fit()
 
 # Forecasting
@@ -153,14 +148,15 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
+## HERE: take a subset y_true vector to measure performance (i.e. use historical data we have as a test set)
+# Actual values for comparison (replace y_true with the actual values for the forecast horizon)
+y_true = df['Frequency'][-forecast_horizon:]
 
 
+mae = mean_absolute_error(y_true, forecast)
+mse = mean_squared_error(y_true, forecast)
+rmse = mean_squared_error(y_true, forecast, squared=False)
 
-
-
-
-
-
-
-
-
+print(f"Mean Absolute Error (MAE): {mae:.2f}")
+print(f"Mean Squared Error (MSE): {mse:.2f}")
+print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")

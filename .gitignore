@@ -1,7 +1,7 @@
 # source/derived data
 data
 derivatives
-.csv
+*.csv
 
 # Environment
 venv/
