@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-
+import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 def read_data():
     df = pd.read_csv('DWH-Noise_2022-2023.csv')
@@ -92,6 +93,7 @@ def do_ACF_PACF_plots(timeseries):
     return
 
 
+
 # Gathering dataset
 df = read_data()
 df = convert_df_to_timeseries(df)
@@ -133,7 +135,7 @@ model = ARIMA(df['Frequency'], order=(p, d, q), seasonal_order=(seasonal_p, seas
 result = model.fit()
 
 # Forecasting
-forecast_horizon = 10  # Replace this with the number of periods you want to forecast
+forecast_horizon = 5  # Replace this with the number of periods you want to forecast
 forecast = result.forecast(steps=forecast_horizon)
 
 # Plot the forecast
@@ -150,13 +152,25 @@ plt.show()
 
 ## HERE: take a subset y_true vector to measure performance (i.e. use historical data we have as a test set)
 # Actual values for comparison (replace y_true with the actual values for the forecast horizon)
-y_true = df['Frequency'][-forecast_horizon:]
+df_subset = df[:-forecast_horizon]
 
+# Create the ARIMA model with seasonal components
+model = ARIMA(df_subset['Frequency'], order=(p, d, q), seasonal_order=(seasonal_p, seasonal_d, seasonal_q, seasonal_period))
+result = model.fit()
 
-mae = mean_absolute_error(y_true, forecast)
-mse = mean_squared_error(y_true, forecast)
-rmse = mean_squared_error(y_true, forecast, squared=False)
+forecast = result.forecast(steps=forecast_horizon)
+
+actual_values = df['Frequency'][-5:]
+pred_values = forecast
+
+actual_values.reset_index(inplace=True, drop=True)
+pred_values.reset_index(inplace=True, drop=True)
+
+mae = mean_absolute_error(actual_values, pred_values)
+mse = mean_squared_error(actual_values, pred_values)
+rmse = mean_squared_error(actual_values, pred_values, squared=False)
 
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 print(f"Mean Squared Error (MSE): {mse:.2f}")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
+
